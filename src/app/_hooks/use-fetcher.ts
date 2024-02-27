@@ -54,9 +54,7 @@ function useFetcher<Data>(
       }
 
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+      setError(error instanceof Error ? error.message : error as string);
     } finally {
       setIsBusy(false);
     }

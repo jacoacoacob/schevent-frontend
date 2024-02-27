@@ -1,5 +1,7 @@
 import React from "react";
 import type { EventListData } from "../_components/event-list"
+import { useDateTimePicker } from "../_hooks/use-date-time-picker";
+import { DateTimePicker } from "./date-time-picker";
 
 interface EventDetailProps {
   data: EventListData[number];
@@ -7,6 +9,8 @@ interface EventDetailProps {
 
 function EventListItem(props: EventDetailProps) {
   const { data: { _id, invitees, name, description, timestamp }} = props;
+
+  const dateTimePickerProps = useDateTimePicker()
 
   const descriptionParagraphs = React.useMemo(() => description.split("\n"), [description]);
   
@@ -32,6 +36,8 @@ function EventListItem(props: EventDetailProps) {
           )}
         </ul>
       </section>
+      <DateTimePicker {...dateTimePickerProps} />
+      {JSON.stringify(dateTimePickerProps)}
     </li>
   );
 }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { EventList } from './_components/event-list';
+import { EventsProvider } from './_components/events-provider';
+import { CreateEvent } from './_components/create-event';
 
 export default function Home() {
   return (
@@ -11,7 +13,10 @@ export default function Home() {
             Welcome to Schevent! Create events, invite friends, get reminders.
           </p>
         </section>
-        <EventList />
+        <EventsProvider>
+          <CreateEvent />
+          <EventList />
+        </EventsProvider>
       </div>
     </main>
   );

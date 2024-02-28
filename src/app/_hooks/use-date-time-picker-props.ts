@@ -1,11 +1,12 @@
 import React, { ChangeEventHandler, FormEventHandler } from "react";
+import type { DateTimePickerProps } from "../_components/date-time-picker";
 
 interface UseDateTimePickerOptions {
   date?: string;
   time?: string;
 }
 
-function useDateTimePicker(options?: UseDateTimePickerOptions) {
+function useDateTimePickerProps(options?: UseDateTimePickerOptions): DateTimePickerProps {  
   const [date, setDate] = React.useState(options?.date ?? "");
   const [time, setTime] = React.useState(options?.time ?? "");
 
@@ -25,4 +26,4 @@ function useDateTimePicker(options?: UseDateTimePickerOptions) {
   };
 }
 
-export { useDateTimePicker };
+export { useDateTimePickerProps };

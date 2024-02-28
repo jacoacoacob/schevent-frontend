@@ -40,7 +40,12 @@ export interface components {
       statusCode: number;
       message: string;
     };
-    UpdateEventDto: Record<string, never>;
+    UpdateEventDto: {
+      name?: string;
+      description?: string;
+      timestamp?: string;
+      invitees?: string[];
+    };
   };
   responses: never;
   parameters: never;

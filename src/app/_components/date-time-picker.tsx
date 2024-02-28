@@ -41,3 +41,4 @@ function DateTimePicker(props: DateTimePickerProps) {
 }
 
 export { DateTimePicker };
+export type { DateTimePickerProps };

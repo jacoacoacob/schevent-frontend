@@ -15,16 +15,16 @@ interface Fetcher<Data> {
 interface UseFetcherOptions<Data> {
   immediate?: boolean;
   initialData?: Data;
+  postSuccess?: () => Promise<void>; 
 }
 
 function useFetcher<Data>(
   query: QueryFn<Data>,
   options: UseFetcherOptions<Data> = {
     immediate: false,
-    initialData: undefined
   }
 ): Fetcher<Data> {
-  const { immediate, initialData } = options;
+  const { immediate, initialData, postSuccess } = options;
 
   const [data, setData] = React.useState<Data>(initialData as Data);
   const [error, setError] = React.useState("");
@@ -47,6 +47,13 @@ function useFetcher<Data>(
       
       if (data) {
         setData(data);
+        if (postSuccess) {
+          try {
+            void postSuccess();
+          } catch (error) {
+            console.warn("[useFetcher postSuccess]", error);
+          }
+        }
       }
       
       if (error) {

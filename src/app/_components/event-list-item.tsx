@@ -46,6 +46,7 @@ function EventListItem(props: EventDetailProps) {
       </section>
       <section className="p-4 border-t">
         <button className="rounded border border-slate-400 px-2 py-1" onClick={removeEvent.doFetch}>delete</button>
+        {/* <button className="rounded border border-slate-400 px-2 py-1" onClick={}>edit</button> */}
       </section>
     </li>
   );

@@ -1,12 +1,14 @@
 import React, { ChangeEventHandler, FormEventHandler } from "react";
-import type { DateTimePickerProps } from "../_components/date-time-picker";
+import type { EditEventDateTimeProps } from "../_components/edit-event-date-time";
 
-interface UseDateTimePickerOptions {
+interface UseEditDateTimeProps {
   date?: string;
   time?: string;
 }
 
-function useDateTimePickerProps(options?: UseDateTimePickerOptions): DateTimePickerProps {  
+function useEditDateTime(
+  options?: UseEditDateTimeProps
+): EditEventDateTimeProps {  
   const [date, setDate] = React.useState(options?.date ?? "");
   const [time, setTime] = React.useState(options?.time ?? "");
 
@@ -26,4 +28,4 @@ function useDateTimePickerProps(options?: UseDateTimePickerOptions): DateTimePic
   };
 }
 
-export { useDateTimePickerProps };
+export { useEditDateTime };

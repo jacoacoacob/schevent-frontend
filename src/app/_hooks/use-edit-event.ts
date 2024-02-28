@@ -1,6 +1,6 @@
 import React, { SetStateAction } from "react";
 import type { EventListData } from "../_components/event-list";
-import { useDateTimePickerProps } from "./use-date-time-picker-props";
+import { useEditDateTime } from "./use-edit-date-time";
 
 function handleInput<Value>(
   setter: React.Dispatch<React.SetStateAction<Value>>
@@ -13,13 +13,14 @@ function handleInput<Value>(
 function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
   const [name, setName] = React.useState(initialValues.name ?? "");
   const [description, setDescription] = React.useState(initialValues.description ?? "");
+  const [invitees, setInvitees] = React.useState<string[]>(initialValues.invitees ?? []);
 
   const onInputName = handleInput(setName);
   const onInputDescription = handleInput(setDescription);
 
   const d = initialValues.timestamp ? new Date(initialValues.timestamp) : new Date();
 
-  const dateAndTime = useDateTimePickerProps({
+  const dateAndTime = useEditDateTime({
     date: d.toDateString(),
     time: d.toTimeString(),
   });
@@ -27,13 +28,16 @@ function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
   function reset() {
     setName(initialValues.name ?? "");
     setDescription(initialValues.description ?? "");
+    setInvitees(initialValues.invitees ?? []);
   }
 
   return {
     name,
     description,
+    invitees,
     onInputName,
     onInputDescription,
+    setInvitees,
     dateAndTime,
     reset,
   }

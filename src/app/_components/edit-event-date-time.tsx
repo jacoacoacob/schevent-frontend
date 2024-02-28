@@ -11,34 +11,38 @@ const TIMES = Array.from(Array(60 * 24 / 5)).map((_, i) => {
   const value = `${hour}:${minute}:00`;
 
   return {
-    hour: Math.floor(_hour % 12) === 0 ? 12 : Math.floor(_hour % 12),
+    hour: Math.floor(_hour % 12) === 0
+      ? 12
+      : Math.floor(_hour % 12),
     minute,
     ampm,
     value,
   };
 });
 
-interface DateTimePickerProps {
+interface EditEventDateTimeProps {
   date: string;
   onDateChange: FormEventHandler<HTMLInputElement>;
   time: string;
   onTimeChange: ChangeEventHandler<HTMLSelectElement>;
 }
 
-function DateTimePicker(props: DateTimePickerProps) {
+function EditEventDateTime(props: EditEventDateTimeProps) {
   const { date, time, onDateChange, onTimeChange } = props;
 
   return (
     <div className="flex space-x-2">
       <input type="date" value={date} onChange={onDateChange} />
-      <select name="time" id="" onChange={onTimeChange}>
-        {TIMES.map((time, index) =>
-          <option key={index} value={time.value}>{time.hour}:{time.minute} {time.ampm}</option>
+      <select name="time" id="" onChange={onTimeChange} defaultValue={`${date} ${time}`}>
+        {TIMES.map((item, index) =>
+          <option key={index} value={item.value}>
+            {item.hour}:{item.minute} {item.ampm}
+          </option>
         )}
       </select>
     </div>
   )
 }
 
-export { DateTimePicker };
-export type { DateTimePickerProps };
+export { EditEventDateTime };
+export type { EditEventDateTimeProps };

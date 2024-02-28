@@ -34,7 +34,7 @@ function EventsProvider({ children }: Props) {
   const eventsList = useFetcher(
     async () => {
       // // mock network latency
-      await delay(1000);
+      await delay(500);
       return client.GET("/events")
     },
     {

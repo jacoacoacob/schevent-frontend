@@ -41,8 +41,10 @@ function EventList() {
   }
 
   return (
-    <div>
-      {isBusy && "Updating event list"}
+    <div className="relative">
+      {isBusy &&
+        <span>Refreshing event list</span>
+      }
       <ul className="space-y-4">
         {eventList.map(event =>
           <EventListItem key={event._id} data={event} refetchEventList={doFetch} />

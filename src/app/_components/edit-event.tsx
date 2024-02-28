@@ -68,7 +68,7 @@ function EditEvent({ data, action, onSuccess }: EditEventProps) {
     async (ev) => {
       ev.preventDefault();
       await fetcher.doFetch();
-      if (!fetcher.error) {
+      if (!fetcher.error.current) {
         onSuccess();
       }
     },
@@ -77,9 +77,9 @@ function EditEvent({ data, action, onSuccess }: EditEventProps) {
 
   return (
     <div>
-      {fetcher.error &&
+      {fetcher.error.current &&
         <div className="bg-red-100 text-red-500 rounded border border-red-500 p-4">
-          {fetcher.error}
+          {fetcher.error.current}
         </div>
       }
       <form onSubmit={onSubmit} className="space-y-4">

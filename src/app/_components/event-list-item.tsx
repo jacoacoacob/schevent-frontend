@@ -23,7 +23,7 @@ function EventListItem(props: EventListItemProps) {
 
   const onRemoveEvent = React.useCallback(async () => {
     await removeEvent.doFetch();
-    if (!removeEvent.error) {
+    if (!removeEvent.error.current) {
       await refetchEventList();
     }
   }, [refetchEventList, removeEvent]);

@@ -7,7 +7,7 @@ type QueryFn<Data> = (...args: any) => Promise<{
 
 interface Fetcher<Data> {
   data: Data;
-  error: string;
+  error: React.RefObject<string>;
   isBusy: boolean;
   doFetch: () => Promise<void>;
 }
@@ -26,8 +26,9 @@ function useFetcher<Data>(
   const { immediate, initialData } = options;
 
   const [data, setData] = React.useState<Data>(initialData as Data);
-  const [error, setError] = React.useState("");
+  // const [error, setError] = React.useState("");
   const [isBusy, setIsBusy] = React.useState(false);
+  const error = React.useRef("");
 
   React.useEffect(() => {
     if (immediate) {
@@ -40,26 +41,29 @@ function useFetcher<Data>(
 
   const doFetch = React.useCallback(async () => {
     try {
+      error.current = "";
       setIsBusy(true);
 
-      const { data, error: queryError } = await query();
+      const { data: queryData, error: queryError } = await query();
       
       if (queryError) {
-        setError(() =>
-          typeof queryError === "string" ? queryError : queryError.message
-        );
-      } else if (data) {
-        setData(data);
+        // setError(() =>
+        //   typeof queryError === "string" ? queryError : queryError.message
+        // );
+        error.current = typeof queryError === "string" ? queryError : queryError.message;
+      } else if (queryData) {
+        setData(queryData);
       }
       
     } catch (err) {
-      setError(() => err instanceof Error ? err.message : err as string);
+      // setError(() => err instanceof Error ? err.message : err as string);
+      error.current = err instanceof Error ? err.message : err as string;
     } finally {
       setIsBusy(false);
     }
   }, [query]);
 
-  return { data, error, isBusy, doFetch };
+  return { data, isBusy, doFetch, error };
 }
 
 

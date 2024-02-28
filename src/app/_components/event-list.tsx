@@ -24,7 +24,7 @@ function EventList() {
     [data]
   );
 
-  if (error) {
+  if (error.current) {
     return (
       <div>
         Oh dear 😕 We couldn&apos;t load your events 😭

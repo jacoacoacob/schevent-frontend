@@ -20,7 +20,7 @@ function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
 
   const d = initialValues.timestamp ? new Date(initialValues.timestamp) : new Date();
 
-  const dateAndTime = useEditDateTime({
+  const dateTime = useEditDateTime({
     date: d.toDateString(),
     time: d.toTimeString(),
   });
@@ -38,7 +38,7 @@ function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
     onInputName,
     onInputDescription,
     setInvitees,
-    dateAndTime,
+    dateTime,
     reset,
   }
 }

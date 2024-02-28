@@ -15,12 +15,12 @@ function delay(millis: number) {
 
 function EventList() {
 
-  const { data, error, isBusy, doFetch } = useEventsList();
+  const { data, error, isBusy } = useEventsList();
 
   const eventList = React.useMemo(
     () => Array
       .from(data)
-      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()),
+      .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()),
     [data]
   );
 
@@ -47,7 +47,7 @@ function EventList() {
       }
       <ul className="space-y-4">
         {eventList.map(event =>
-          <EventListItem key={event._id} data={event} refetchEventList={doFetch} />
+          <EventListItem key={event._id} data={event} />
         )}
       </ul>
     </div>

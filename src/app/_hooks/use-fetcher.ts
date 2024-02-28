@@ -43,7 +43,7 @@ function useFetcher<Data>(
     try {
       setIsBusy(true);
 
-      const { data, error } = await query();
+      const { data, error: queryError } = await query();
       
       if (data) {
         setData(data);
@@ -56,12 +56,14 @@ function useFetcher<Data>(
         }
       }
       
-      if (error) {
-        setError(typeof error === "string" ? error : error.message);
+      if (queryError) {
+        setError(
+          typeof queryError === "string" ? queryError : queryError.message
+        );
       }
 
-    } catch (error) {
-      setError(error instanceof Error ? error.message : error as string);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : err as string);
     } finally {
       setIsBusy(false);
     }

@@ -1,15 +1,11 @@
 import React from "react";
+import { client } from "../../api-client";
+import { useUsersList } from "../_hooks/use-users-list";
 import { useEditEvent } from "../_hooks/use-edit-event";
+import { useFetcher } from "../_hooks/use-fetcher";
 import type { EventListData } from "./event-list";
-import { paths } from "@/api-types";
 import { EditEventDateTime } from "./edit-event-date-time";
 import { EventFormInviteeSelect } from "./edit-event-invitees";
-import { useUsersList } from "../_hooks/use-users-list";
-import { useFetcher } from "../_hooks/use-fetcher";
-import { client } from "@/api-client";
-
-type CreateEventRequestBody = paths["/events"]["post"]["requestBody"]["content"]["application/json"];
-type UpdateEventRequestBody = paths["/events/{id}"]["patch"]["requestBody"]["content"]["application/json"];
 
 interface EditEventProps {
   data?: EventListData[number];
@@ -19,7 +15,7 @@ interface EditEventProps {
 
 function EditEvent({ data, action, onSuccess }: EditEventProps) {
   const {
-    dateAndTime,
+    dateTime,
     description,
     name,
     invitees,
@@ -38,7 +34,7 @@ function EditEvent({ data, action, onSuccess }: EditEventProps) {
   
   const usersList = useUsersList();
 
-  const { date, time } = dateAndTime;
+  const { date, time } = dateTime;
 
   const requestBody = React.useMemo(() => ({
     name,
@@ -53,8 +49,15 @@ function EditEvent({ data, action, onSuccess }: EditEventProps) {
   );
 
   const updateEventQuery = React.useCallback(
-    () => client.POST("/events", { body: requestBody }),
-    [requestBody]
+    () => client.PATCH("/events/{id}", {
+      body: requestBody,
+      params: {
+        path: {
+          id: data?._id ?? "",
+        }
+      }
+    }),
+    [data?._id, requestBody]
   );
 
   const fetcher = useFetcher(
@@ -73,31 +76,38 @@ function EditEvent({ data, action, onSuccess }: EditEventProps) {
   );
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <input
-        type="text"
-        className="p-2 rounded border outline-none focus:ring"
-        value={name}
-        onInput={onInputName}
-        placeholder="Give your event a name"
-      />
-      <EditEventDateTime {...dateAndTime} />
-      <textarea
-        value={description}
-        onInput={onInputDescription}
-        placeholder="Give your event a description"
-      ></textarea>
-      <EventFormInviteeSelect
-        value={invitees}
-        onChange={setInvitees}
-        options={usersList}
-      />
-      <button type="submit">
-        Save Event
-      </button>
-    </form>
+    <div>
+      {fetcher.error &&
+        <div className="bg-red-100 text-red-500 rounded border border-red-500 p-4">
+          {fetcher.error}
+        </div>
+      }
+      <form onSubmit={onSubmit} className="space-y-4">
+        <input
+          type="text"
+          className="p-2 rounded border outline-none focus:ring"
+          value={name}
+          onInput={onInputName}
+          placeholder="Give your event a name"
+        />
+        <EditEventDateTime {...dateTime} />
+        <textarea
+          value={description}
+          onInput={onInputDescription}
+          placeholder="Give your event a description"
+        ></textarea>
+        <EventFormInviteeSelect
+          value={invitees}
+          onChange={setInvitees}
+          options={usersList}
+        />
+        <button type="submit">
+          Save Event
+        </button>
+      </form>
+    </div>
   )
 }
 
 export { EditEvent }
-export type { CreateEventRequestBody, UpdateEventRequestBody };
+// export type { CreateEventRequestBody, UpdateEventRequestBody };

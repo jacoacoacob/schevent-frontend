@@ -26,7 +26,6 @@ function useFetcher<Data>(
   const { immediate, initialData } = options;
 
   const [data, setData] = React.useState<Data>(initialData as Data);
-  // const [error, setError] = React.useState("");
   const [isBusy, setIsBusy] = React.useState(false);
   const error = React.useRef("");
 
@@ -47,16 +46,12 @@ function useFetcher<Data>(
       const { data: queryData, error: queryError } = await query();
       
       if (queryError) {
-        // setError(() =>
-        //   typeof queryError === "string" ? queryError : queryError.message
-        // );
         error.current = typeof queryError === "string" ? queryError : queryError.message;
       } else if (queryData) {
         setData(queryData);
       }
       
     } catch (err) {
-      // setError(() => err instanceof Error ? err.message : err as string);
       error.current = err instanceof Error ? err.message : err as string;
     } finally {
       setIsBusy(false);

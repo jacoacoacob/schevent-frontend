@@ -110,4 +110,3 @@ function EditEvent({ data, action, onSuccess }: EditEventProps) {
 }
 
 export { EditEvent }
-// export type { CreateEventRequestBody, UpdateEventRequestBody };

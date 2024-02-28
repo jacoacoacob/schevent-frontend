@@ -14,6 +14,16 @@ function datePart(part: number) {
   return `${part}`.padStart(2, "0");
 }
 
+/**
+ * 
+ * @returns a `Date` instace at the next nearest 5 minute interval
+ */
+function getDateAtNearestMinute5() {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() + (5 - (d.getMinutes() % 5)));
+  return d;
+}
+
 function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
   const [name, setName] = React.useState(initialValues.name ?? "");
   const [description, setDescription] = React.useState(initialValues.description ?? "");
@@ -22,7 +32,7 @@ function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
   const onInputName = handleInput(setName);
   const onInputDescription = handleInput(setDescription);
 
-  const d = initialValues.timestamp ? new Date(initialValues.timestamp) : new Date();
+  const d = initialValues.timestamp ? new Date(initialValues.timestamp) : getDateAtNearestMinute5();
 
   const _year = d.getFullYear();
   const _month = datePart(d.getMonth() + 1);
@@ -32,7 +42,7 @@ function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
 
   const dateTime = useEditDateTime({
     date: `${_year}-${_month}-${_date}`,
-    time: `${_hour}:${_minutes}`,
+    time: `${_hour}:${_minutes}:00`,
   });
 
   function reset() {

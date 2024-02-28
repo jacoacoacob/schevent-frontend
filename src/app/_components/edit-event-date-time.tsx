@@ -1,3 +1,4 @@
+import React from "react";
 import { ChangeEventHandler, FormEventHandler } from "react";
 
 const TIMES = Array.from(Array(60 * 24 / 5)).map((_, i) => {
@@ -33,7 +34,7 @@ function EditEventDateTime(props: EditEventDateTimeProps) {
   return (
     <div className="flex space-x-2">
       <input type="date" value={date} onChange={onDateChange} />
-      <select name="time" id="" onChange={onTimeChange} defaultValue={`${date} ${time}`}>
+      <select name="time" id="" onChange={onTimeChange} defaultValue={time}>
         {TIMES.map((item, index) =>
           <option key={index} value={item.value}>
             {item.hour}:{item.minute} {item.ampm}

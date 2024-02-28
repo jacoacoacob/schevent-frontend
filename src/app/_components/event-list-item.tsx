@@ -11,7 +11,7 @@ interface EventListItemProps {
 }
 
 function EventListItem(props: EventListItemProps) {
-  const {  data } = props;
+  const { data } = props
 
   const [isEditing, setIsEditing] = React.useState(false);
 

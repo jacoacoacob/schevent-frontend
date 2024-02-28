@@ -38,28 +38,26 @@ function useFetcher<Data>(
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function doFetch() {
+  const doFetch = React.useCallback(async () => {
     try {
       setIsBusy(true);
 
       const { data, error: queryError } = await query();
       
-      if (data) {
+      if (queryError) {
+        setError(() =>
+          typeof queryError === "string" ? queryError : queryError.message
+        );
+      } else if (data) {
         setData(data);
       }
       
-      if (queryError) {
-        setError(
-          typeof queryError === "string" ? queryError : queryError.message
-        );
-      }
-
     } catch (err) {
-      setError(err instanceof Error ? err.message : err as string);
+      setError(() => err instanceof Error ? err.message : err as string);
     } finally {
       setIsBusy(false);
     }
-  }
+  }, [query]);
 
   return { data, error, isBusy, doFetch };
 }

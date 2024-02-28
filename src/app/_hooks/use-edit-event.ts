@@ -10,6 +10,10 @@ function handleInput<Value>(
   }
 }
 
+function datePart(part: number) {
+  return `${part}`.padStart(2, "0");
+}
+
 function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
   const [name, setName] = React.useState(initialValues.name ?? "");
   const [description, setDescription] = React.useState(initialValues.description ?? "");
@@ -20,9 +24,15 @@ function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
 
   const d = initialValues.timestamp ? new Date(initialValues.timestamp) : new Date();
 
+  const _year = d.getFullYear();
+  const _month = datePart(d.getMonth() + 1);
+  const _date = datePart(d.getDate());
+  const _hour = datePart(d.getHours());
+  const _minutes = datePart(d.getMinutes());
+
   const dateTime = useEditDateTime({
-    date: d.toDateString(),
-    time: d.toTimeString(),
+    date: `${_year}-${_month}-${_date}`,
+    time: `${_hour}:${_minutes}`,
   });
 
   function reset() {

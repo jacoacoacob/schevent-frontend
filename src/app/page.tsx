@@ -10,7 +10,7 @@ export default function Home() {
         <section className="space-y-2">
           <h1 className="text-4xl font-bold">Schevent</h1>
           <p>
-            Welcome to Schevent! Create events, invite friends, get reminders.
+            Welcome to Schevent! Schedule events, invite friends, get reminders.
           </p>
         </section>
         <EventsProvider>

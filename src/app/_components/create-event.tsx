@@ -15,14 +15,16 @@ function CreateEvent() {
   }, [eventsList]);
 
   return (
-    <div>
-      <button
-        className="px-2 py-1 border border-slate-400 rounded"
-        onClick={() => setIsFormShowing(!isFormShowing)}
-      >
-        {isFormShowing ? "Cancel" : "+ Create Event"}
-      </button>
-      {isFormShowing && <EditEvent action="create" onSuccess={onSuccess} />}
+    <div className="space-y-2">
+      {!isFormShowing && (
+        <button
+          className="px-2 py-1 border border-slate-400 rounded"
+          onClick={() => setIsFormShowing(!isFormShowing)}
+        >
+          + Create Event
+        </button>
+      )}
+      {isFormShowing && <EditEvent onCancel={() => setIsFormShowing(false)} action="create" onSuccess={onSuccess} />}
     </div>
   )
 }

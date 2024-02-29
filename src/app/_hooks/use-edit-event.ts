@@ -32,7 +32,7 @@ function useEditEvent(initialValues: Partial<EventListData[number]> = {}) {
   const onInputName = handleInput(setName);
   const onInputDescription = handleInput(setDescription);
 
-  const d = initialValues.timestamp ? new Date(initialValues.timestamp) : getDateAtNearestMinute5();
+  const d = initialValues.startsAt ? new Date(initialValues.startsAt) : getDateAtNearestMinute5();
 
   const _year = d.getFullYear();
   const _month = datePart(d.getMonth() + 1);

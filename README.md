@@ -25,4 +25,6 @@ npm run dev
 ## Design Choices and Areas for Improvement
 
 **Todo**:
-- Form validation
+- Form validation with [yup](https://yup-docs.vercel.app/docs/intro) or [zod](https://zod.dev/)
+- Use [@tanstack/react-query](https://tanstack.com/query/latest) to reduce network overhead and provide more extensible fetching API
+

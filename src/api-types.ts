@@ -26,14 +26,15 @@ export interface components {
     CreateEventDto: {
       name: string;
       description: string;
-      timestamp: string;
+      startsAt: string;
       invitees: string[];
     };
     EventResponseDto: {
       _id: string;
       name: string;
       description: string;
-      timestamp: string;
+      /** Format: date-time */
+      startsAt: string;
       invitees: string[];
     };
     HttpExceptionDto: {
@@ -43,7 +44,7 @@ export interface components {
     UpdateEventDto: {
       name?: string;
       description?: string;
-      timestamp?: string;
+      startsAt?: string;
       invitees?: string[];
     };
   };

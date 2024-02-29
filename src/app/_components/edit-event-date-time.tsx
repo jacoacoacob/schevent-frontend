@@ -33,8 +33,8 @@ function EditEventDateTime(props: EditEventDateTimeProps) {
 
   return (
     <div className="flex space-x-2">
-      <input type="date" value={date} onChange={onDateChange} />
-      <select name="time" id="" onChange={onTimeChange} defaultValue={time}>
+      <input className="form-control" type="date" value={date} onChange={onDateChange} />
+      <select className="form-control" name="time" onChange={onTimeChange} defaultValue={time}>
         {TIMES.map((item, index) =>
           <option key={index} value={item.value}>
             {item.hour}:{item.minute} {item.ampm}

@@ -20,7 +20,7 @@ function EventList() {
   const eventList = React.useMemo(
     () => Array
       .from(data)
-      .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()),
+      .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()),
     [data]
   );
 

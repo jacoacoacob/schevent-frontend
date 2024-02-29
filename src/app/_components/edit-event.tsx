@@ -5,15 +5,16 @@ import { useEditEvent } from "../_hooks/use-edit-event";
 import { useFetcher } from "../_hooks/use-fetcher";
 import type { EventListData } from "./event-list";
 import { EditEventDateTime } from "./edit-event-date-time";
-import { EventFormInviteeSelect } from "./edit-event-invitees";
+import { EditEventInvitees } from "./edit-event-invitees";
 
 interface EditEventProps {
   data?: EventListData[number];
   action: "create" | "update";
   onSuccess: () => void;
+  onCancel: () => void;
 }
 
-function EditEvent({ data, action, onSuccess }: EditEventProps) {
+function EditEvent({ data, action, onSuccess, onCancel }: EditEventProps) {
   const {
     dateTime,
     description,
@@ -36,12 +37,21 @@ function EditEvent({ data, action, onSuccess }: EditEventProps) {
 
   const { date, time } = dateTime;
 
-  const requestBody = React.useMemo(() => ({
-    name,
-    description,
-    invitees,
-    timestamp: new Date(`${date} ${time}`).toISOString(),
-  }), [date, description, invitees, name, time]);
+  const requestBody = React.useMemo(() => {
+    // try/catch handles invalid `date` input
+    // TODO: Don't rely on native browser date input validation to prevent
+    // user from submitting form with invalid date
+    let startsAt = "";
+    try {
+      startsAt = new Date(`${date} ${time}`).toISOString()
+    } catch (error) {}
+    return {
+      invitees,
+      startsAt,
+      name: name.trim(),
+      description: description.trim(),
+    }
+  }, [date, description, invitees, name, time]);
 
   const createEventQuery = React.useCallback(
     () => client.POST("/events", { body: requestBody }),
@@ -82,28 +92,34 @@ function EditEvent({ data, action, onSuccess }: EditEventProps) {
           {fetcher.error.current}
         </div>
       }
-      <form onSubmit={onSubmit} className="space-y-4">
+      <form onSubmit={onSubmit} className="space-y-4 flex flex-col">
         <input
           type="text"
-          className="p-2 rounded border outline-none focus:ring"
+          className="form-control"
           value={name}
           onInput={onInputName}
           placeholder="Give your event a name"
         />
         <EditEventDateTime {...dateTime} />
         <textarea
+          className="form-control resize-none"
           value={description}
           onInput={onInputDescription}
           placeholder="Give your event a description"
         ></textarea>
-        <EventFormInviteeSelect
-          value={invitees}
-          onChange={setInvitees}
+        <EditEventInvitees
+          invitees={invitees}
+          setInvitees={setInvitees}
           options={usersList}
         />
-        <button type="submit">
-          Save Event
-        </button>
+        <div className="flex justify-end space-x-4">
+          <button type="button" onClick={onCancel} className="form-control">
+            Cancel
+          </button>
+          <button type="submit" className="form-control bg-slate-800 text-white dark:bg-slate-200 dark:text-black">
+            Save Event
+          </button>
+        </div>
       </form>
     </div>
   )

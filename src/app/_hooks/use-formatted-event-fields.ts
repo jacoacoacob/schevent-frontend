@@ -1,15 +1,15 @@
 import React from "react";
 import type { EventListData } from "../_components/event-list";
 
-function useFormattedEventFields({ timestamp, description }: EventListData[number]) {
+function useFormattedEventFields({ startsAt, description }: EventListData[number]) {
   return React.useMemo(() => {
-    const d = new Date(timestamp);
+    const d = new Date(startsAt);
 
     return {
       dateTime: `${d.toDateString()} AT ${d.toLocaleTimeString()}`,
       paragraphs: description.split("\n")
     };
-  }, [description, timestamp]);
+  }, [description, startsAt]);
 }
 
 export { useFormattedEventFields };

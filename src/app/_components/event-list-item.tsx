@@ -22,9 +22,11 @@ function EventListItem(props: EventListItemProps) {
   );
 
   const onRemoveEvent = React.useCallback(async () => {
-    await removeEvent.doFetch();
-    if (!removeEvent.error.current) {
-      await refetchEventList();
+    if (confirm("Are sure you want to delete this event?")) {
+      await removeEvent.doFetch();
+      if (!removeEvent.error.current) {
+        await refetchEventList();
+      }
     }
   }, [refetchEventList, removeEvent]);
 
@@ -34,24 +36,24 @@ function EventListItem(props: EventListItemProps) {
   }, [refetchEventList]);
 
   return (
-    <li className="p-8 rounded shadow border border-slate-400">
+    <li className="p-8 rounded shadow border border-slate-400 space-y-2">
       {isEditing ? (
-        <EditEvent data={data} onSuccess={onEditSuccess} action="update" />)
+        <EditEvent onCancel={() => setIsEditing(false)} data={data} onSuccess={onEditSuccess} action="update" />)
       : (
         <>
           <DisplayEvent data={data} />
-          <section className="p-4 border-t">
+          <section className="pt-4 border-t flex justify-end space-x-4">
             <button
-              className="rounded border border-slate-400 px-2 py-1"
+              className="form-control text-red-500"
               onClick={onRemoveEvent}
             >
-              delete
+              Delete
             </button>
             <button
-              className="rounded border border-slate-400 px-2 py-1"
+              className="form-control  bg-slate-800 text-white dark:bg-slate-200 dark:text-black"
               onClick={() => setIsEditing(!isEditing)}
             >
-              edit
+              Edit
             </button>
           </section>
         </>

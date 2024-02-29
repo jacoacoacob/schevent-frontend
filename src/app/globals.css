@@ -26,6 +26,16 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+@layer components {
+  .form-control {
+    @apply
+      border rounded outline-none p-2
+      border-slate-400 bg-slate-100
+      focus:ring
+      dark:border-slate-300 dark:bg-slate-800 
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

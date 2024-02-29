@@ -13,6 +13,8 @@ This app consists of a single page where a user can:
 
 ## Design Choices
 
+Since the backend and frontend share no code, I decided to maintain each project in its own repository. If there was code sharing happening, I would create a monorepo using [Turbo Repo](https://turbo.build/repo) or [Nx](https://nx.dev/) with `backend`, `frontend`, and `core` packages.
+
 For time's sake, and because the state management requirements were relatively simple, I used React's Context provider + hooks state management pattern to expose an Events List [Fetcher](./src/app/_hooks/use-fetcher.ts) through my [`useEventsList` hook](./src/app/_components/events-provider.tsx) . This was quicker and more light-weight to setup but lacks the auditability of something like Redux (or a Redux-like system implemented with React's `useReducer` hook).
 
 I used [openapi-typescript](https://openapi-ts.pages.dev/introduction) and [openapi-fetch](https://openapi-ts.pages.dev/openapi-fetch/) to generate typescript interfaces from the swagger-enabled NestJS API and create a fetch client with typed request / response values. GraphQL is definitely the other obvious choice for schema driven full stack development but I was more comfortable with Swagger and REST conventions and went with them for the sake of time.

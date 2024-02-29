@@ -95,10 +95,10 @@ function EditEvent({ data, action, onSuccess, onCancel }: EditEventProps) {
       <form onSubmit={onSubmit} className="space-y-4 flex flex-col">
         <input
           type="text"
-          className="form-control"
+          className="form-control font-bold text-xl"
           value={name}
           onInput={onInputName}
-          placeholder="Give your event a name"
+          placeholder={`Give your${action === "create" ? " new" : ""} event a name`}
         />
         <EditEventDateTime {...dateTime} />
         <textarea
@@ -117,7 +117,7 @@ function EditEvent({ data, action, onSuccess, onCancel }: EditEventProps) {
             Cancel
           </button>
           <button type="submit" className="form-control bg-slate-800 text-white dark:bg-slate-200 dark:text-black">
-            Save Event
+            Save {action === "update" ? "Edits" : "New Event"}
           </button>
         </div>
       </form>

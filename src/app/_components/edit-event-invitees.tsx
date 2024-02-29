@@ -66,8 +66,8 @@ function EditEventInvitees({ invitees, setInvitees, options }: EditEventInvitees
         className="form-control"
         placeholder="Search for people to invite"
       />
-      <div className="relative flex">
-        <Combobox.Options className="absolute top-0 form-control flex flex-col">
+      <div className="relative flex z-10">
+        <Combobox.Options className="absolute top-0 form-control shadow-md flex flex-col">
           {filteredOptions.map((item, i) =>
             <Combobox.Option key={i} value={item}>
               {({ active }) =>

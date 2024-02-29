@@ -7,7 +7,7 @@ function useFormattedEventFields({ startsAt, description }: EventListData[number
 
     return {
       dateTime: `${d.toDateString()} AT ${d.toLocaleTimeString()}`,
-      paragraphs: description.split("\n")
+      paragraphs: description.split("\n").filter(Boolean)
     };
   }, [description, startsAt]);
 }

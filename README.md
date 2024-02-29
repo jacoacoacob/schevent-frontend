@@ -27,4 +27,7 @@ npm run dev
 **Todo**:
 - Form validation with [yup](https://yup-docs.vercel.app/docs/intro) or [zod](https://zod.dev/)
 - Use [@tanstack/react-query](https://tanstack.com/query/latest) to reduce network overhead and provide more extensible fetching API
+- Put "Edit" and "Delete" buttons in `EventListItem` in [Menu](https://headlessui.com/react/menu)
+- Leverage [Nextjs's data fetching features](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-fetch) to fetch
+
 

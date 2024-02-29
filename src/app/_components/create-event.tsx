@@ -18,7 +18,7 @@ function CreateEvent() {
     <div className="space-y-2">
       {!isFormShowing && (
         <button
-          className="px-2 py-1 border border-slate-400 rounded"
+          className="form-control bg-slate-800 text-white dark:bg-slate-200 dark:text-black"
           onClick={() => setIsFormShowing(!isFormShowing)}
         >
           + Create Event

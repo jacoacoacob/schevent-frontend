@@ -36,7 +36,7 @@ function EventListItem(props: EventListItemProps) {
   }, [refetchEventList]);
 
   return (
-    <li className="p-8 rounded shadow border border-slate-400 space-y-2">
+    <li className="p-8 rounded shadow border border-slate-400 space-y-2 bg-slate-50 dark:bg-slate-900">
       {isEditing ? (
         <EditEvent onCancel={() => setIsEditing(false)} data={data} onSuccess={onEditSuccess} action="update" />)
       : (
@@ -50,7 +50,7 @@ function EventListItem(props: EventListItemProps) {
               Delete
             </button>
             <button
-              className="form-control  bg-slate-800 text-white dark:bg-slate-200 dark:text-black"
+              className="form-control  bg-slate-800 text-white dark:bg-slate-200 dark:text-black w-20"
               onClick={() => setIsEditing(!isEditing)}
             >
               Edit

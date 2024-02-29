@@ -1,13 +1,27 @@
 # Schevent Frontend
 
-This is a React / Next.js frontend for **Schevent**, a simple calendar event management application.
+This is a React / Next.js frontend for **Schevent**, a simple calendar event management system.
 
 _Checkout the **Schevent** NestJS backend [here](https://github.com/jacoacoacob/schevent)._
 
-The frontend consists of a single page where a user can
+This app consists of a single page where a user can:
 - Create a new event with information including: event name, start date/time, description, and invitees.
 - See a list of all events sorted by start date/time where events happening sooner appear at the top.
-- 
+- Update event details
+- Delete events
+
+
+## Design Choices
+
+For time's sake, and because the state management requirements were relatively simple, I used React's Context provider + hooks state management pattern to expose an Events List [Fetcher](./src/app/_hooks/use-fetcher.ts) through my [`useEventsList` hook](./src/app/_components/events-provider.tsx) . This was quicker and more light-weight to setup but lacks the auditability of something like Redux (or a Redux-like system implemented with React's `useReducer` hook).
+
+I used [openapi-typescript](https://openapi-ts.pages.dev/introduction) and [openapi-fetch](https://openapi-ts.pages.dev/openapi-fetch/) to generate typescript interfaces from the swagger-enabled NestJS API and create a fetch client with typed request / response values. GraphQL is definitely the other obvious choice for schema driven full stack development but I was more comfortable with Swagger and REST conventions and went with them for the sake of time.
+
+I used TailwindCSS for styling because it's nice (if you install the [recommended extendsions](./.vscode/extensions.json)) and I like it 🙂
+
+I created a custom [date/time picker component](./src/app/_components/edit-event-date-time.tsx) that only allows users choose from a list 5-minute incremented times to set the event start time. _This allows the notification system on the backend to only query the database once every 5 minutes instead of polling more often or implementing a more stateful dynamic cron-job creation system._
+
+I made an effort to put as much business logic in custom [hooks](./src/app/_hooks/) so as to keep component rendering logic cleaner.
 
 
 ## Running Locally
@@ -33,16 +47,6 @@ From the project root:
   ```sh
   npx openapi-typescript http://localhost:8080/swagger-json -o src/api-types.ts
   ```
-
-## Design Choices
-
-For time's sake, and because the state management requirements were relatively simple, I used React's Context provider + hooks state management pattern to expose an Events List [Fetcher](./src/app/_hooks/use-fetcher.ts) through my [`useEventsList` hook](./src/app/_components/events-provider.tsx) . This was quicker and more light-weight to setup but lacks the auditability of something like Redux (or a Redux-like system implemented with React's `useReducer` hook).
-
-I used TailwindCSS for styling because it's nice (if you install the [recommended extendsions](./.vscode/extensions.json)) and I like it 🙂
-
-I created a custom [date/time picker component](./src/app/_components/edit-event-date-time.tsx) that only allows users choose from a list 5-minute incremented times to set the event start time. _This allows the notification system on the backend to only query the database once every 5 minutes instead of polling more often or implementing a more stateful dynamic cron-job creation system._
-
-I made an effort to put as much business logic in custom [hooks](./src/app/_hooks/) so as to keep component rendering logic cleaner.
 
 ## Areas for Improvement
 
